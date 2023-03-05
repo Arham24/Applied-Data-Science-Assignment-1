@@ -1,26 +1,26 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Load the CSV file into a pandas DataFrame
-df = pd.read_csv("exams.csv")
+def line_plot(csv_file, x_col, y_cols, title, x_label, y_label):
+    # Load data
+    data = pd.read_csv('london_weather.csv')
 
-# Create a histogram for each subject using subplots
-fig, axs = plt.subplots(1, 3, figsize=(10, 5))
+    # Extract relevant data
+    x = data[x_col]
+    ys = [data[col] for col in y_cols]
 
-axs[0].hist(df["math score"])
-axs[0].set_xlabel("Math Score")
-axs[0].set_ylabel("Frequency")
-axs[0].set_title("Distribution of Math Scores")
+    # Create plot
+    for y, label in zip(ys, y_cols):
+        plt.plot(x, y, label=label)
 
-axs[1].hist(df["reading score"])
-axs[1].set_xlabel("Reading Score")
-axs[1].set_ylabel("Frequency")
-axs[1].set_title("Distribution of Reading Scores")
+    # Add labels and legend
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.title(title)
+    plt.legend()
 
-axs[2].hist(df["writing score"])
-axs[2].set_xlabel("Writing Score")
-axs[2].set_ylabel("Frequency")
-axs[2].set_title("Distribution of Writing Scores")
+    # Show plot
+    plt.show()
 
-# Display the plot
-plt.show()
+# Call the function with your desired arguments
+line_plot('london_weather.csv', 'date', ['min_temp', 'max_temp'], 'Weather on London', 'Date', 'Value')
